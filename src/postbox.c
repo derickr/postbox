@@ -18,10 +18,9 @@ enum {
   QUOTE_KEY_DISTANCE = 0x2,
   QUOTE_KEY_VIB = 0x3,
 };
-/*
-static void fetch_msg(void) {
-  Tuplet lat_tuple = TupletInteger(QUOTE_KEY_LAT, 1);
-  Tuplet lon_tuple = TupletInteger(QUOTE_KEY_LON, 1);
+
+static void send_ref(char *ref) {
+  Tuplet ref_tuple = TupletCString(QUOTE_KEY_REF, ref);
 
   DictionaryIterator *iter;
   app_message_outbox_begin(&iter);
@@ -30,17 +29,15 @@ static void fetch_msg(void) {
     return;
   }
 
-  dict_write_tuplet(iter, &lat_tuple);
-  dict_write_tuplet(iter, &lon_tuple);
+  dict_write_tuplet(iter, &ref_tuple);
   dict_write_end(iter);
 
   app_message_outbox_send();
 }
-*/
-static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-  // refresh
-//  text_layer_set_text(lat_layer, "Loading...");
- // fetch_msg();
+
+static void select_click_handler(ClickRecognizerRef recognizer, void *context) 
+{
+	send_ref(ref);
 }
 
 static void click_config_provider(void *context) {

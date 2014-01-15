@@ -111,21 +111,12 @@ Pebble.addEventListener(
 );
 
 // Set callback for appmessage events
-Pebble.addEventListener("appmessage",
-                        function(e) {
-                          console.log("message");
-                          if (e.payload.symbol) {
-                            symbol = e.payload.symbol;
-                            console.log("symbol" + symbol);
-                            window.localStorage.setItem("symbol", symbol);
-                            fetchStockQuote(symbol);
-                          }
-                          if (e.payload.fetch) {
-                            Pebble.sendAppMessage({"symbol": symbol});
-                            fetchStockQuote(symbol);
-                          }
-                          if (e.payload.price) {
-                            fetchStockQuote(symbol);
-                          }
-                        });
-
+Pebble.addEventListener(
+	"appmessage",
+	function(e) {
+		if (e.payload.ref) {
+			symbol = e.payload.ref;
+			console.log("ref " + ref);
+		}
+	}
+);
