@@ -163,20 +163,20 @@ static void window_load(Window *window) {
   text_layer_set_text_alignment(timeLayer, GTextAlignmentCenter);
 
   ref_layer = text_layer_create( (GRect) { .origin = { 0, 50 }, .size = { bounds.size.w, 24 } });
-  text_layer_set_text(ref_layer, "ref");
+  text_layer_set_text(ref_layer, "");
   text_layer_set_text_alignment(ref_layer, GTextAlignmentCenter);
   text_layer_set_font(ref_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
   layer_add_child(window_layer, text_layer_get_layer(ref_layer));
 
   desc_layer = text_layer_create( (GRect) { .origin = { 2, 80 }, .size = { bounds.size.w - 4, 60 } });
-  text_layer_set_text(desc_layer, "desc");
+  text_layer_set_text(desc_layer, "Hello there. I am locating the nearest postbox. Stay with me for a bit.");
   text_layer_set_text_alignment(desc_layer, GTextAlignmentCenter);
   text_layer_set_overflow_mode(desc_layer, GTextOverflowModeFill);
   text_layer_set_font(desc_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
   layer_add_child(window_layer, text_layer_get_layer(desc_layer));
 
   distance_layer = text_layer_create( (GRect) { .origin = { 0, 140 }, .size = { bounds.size.w, 24 } });
-  text_layer_set_text(distance_layer, "distance");
+  text_layer_set_text(distance_layer, "");
   text_layer_set_text_alignment(distance_layer, GTextAlignmentCenter);
   text_layer_set_font(distance_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
   layer_add_child(window_layer, text_layer_get_layer(distance_layer));
