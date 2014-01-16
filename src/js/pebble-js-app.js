@@ -29,6 +29,7 @@ function fetchStockQuote(lat, lon)
 {
 	var response;
 	var req = new XMLHttpRequest();
+
 	// build the GET request
 	req.open('GET', "http://maps.derickrethans.nl/maps-postbox/fetch-poi.php?simple=1" + "&lat=" + lat + "&lon=" + lon, true);
 	req.onload = function(e) {
@@ -43,6 +44,8 @@ function fetchStockQuote(lat, lon)
 					ref = response.ref.toString();
 					if (response.score > 99) { 
 						ref = ref + " *";
+					} else if (response.score > 49) { 
+						ref = ref + " +";
 					}
 					desc = response.desc.toString();
 				}
@@ -50,7 +53,7 @@ function fetchStockQuote(lat, lon)
 				if (response.distance) {
 					distance = response.distance.toString();
 					console.log("Sending: " + distance);
-					if (response.distance <= 75 && response.score < 99) {
+					if (response.distance <= 75 && response.score < 50) {
 						if (last_vib_ref != ref) {
 							console.log("Instruct to vibrate for " + ref);
 							Pebble.sendAppMessage({"distance": distance + " m", "vib": true}, function() { doSendRef(); } );
@@ -115,8 +118,13 @@ Pebble.addEventListener(
 	"appmessage",
 	function(e) {
 		if (e.payload.ref) {
+			var response;
+			var req = new XMLHttpRequest();
+
 			symbol = e.payload.ref;
-			console.log("ref " + ref);
+			req.open('POST', "http://maps.derickrethans.nl/maps-postbox/record-visit.php?ref=" + symbol, true);
+
+			console.log("Recorded visit for postbox " + ref);
 		}
 	}
 );
