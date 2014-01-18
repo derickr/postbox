@@ -120,9 +120,21 @@ Pebble.addEventListener(
 		if (e.payload.ref) {
 			var response;
 			var req = new XMLHttpRequest();
+			var symbol = e.payload.ref;
+			var params = "ref=" + symbol;
 
-			symbol = e.payload.ref;
-			req.open('POST', "http://maps.derickrethans.nl/maps-postbox/record-visit.php?ref=" + symbol, true);
+			req.open('POST', "http://maps.derickrethans.nl/maps-postbox/record-visit.php", true);
+
+			req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			req.setRequestHeader("Content-length", params.length);
+			req.setRequestHeader("Connection", "close");
+
+			req.onreadystatechange = function() {
+				if (req.readyState == 4 && req.status == 200) {
+					Pebble.showSimpleNotificationOnPebble(symbol, "Postbox " + symbol + " has been marked as visited!");
+				}
+			}
+			req.send(params);
 
 			console.log("Recorded visit for postbox " + ref);
 		}
