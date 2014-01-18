@@ -42,12 +42,12 @@ function fetchStockQuote(lat, lon)
 				ref = "???"; desc = "???";
 				if (response.ref && response.desc) {
 					ref = response.ref.toString();
-					if (response.score > 99) { 
-						ref = ref + " *";
-					} else if (response.score > 49) { 
-						ref = ref + " +";
-					}
 					desc = response.desc.toString();
+					if (response.score > 99) { 
+						desc = "* " + desc;
+					} else if (response.score > 49) { 
+						desc = "+ " + desc;
+					}
 				}
 
 				if (response.distance) {
