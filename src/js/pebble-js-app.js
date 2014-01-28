@@ -52,19 +52,23 @@ function fetchStockQuote(lat, lon)
 
 				if (response.distance) {
 					distance = response.distance.toString();
+					wd = '?';
+					if (response.w) {
+						wd = response.w.toString();
+					}
 					console.log("Sending: " + distance);
 					if (response.distance <= 75 && response.score < 50) {
 						if (last_vib_ref != ref) {
 							console.log("Instruct to vibrate for " + ref);
-							Pebble.sendAppMessage({"distance": distance + " m", "vib": true}, function() { doSendRef(); } );
+							Pebble.sendAppMessage({"distance": distance + " m - " + wd, "vib": true}, function() { doSendRef(); } );
 							last_vib_ref = ref;
 						} else {
 							console.log("Already vibrated for " + ref);
-							Pebble.sendAppMessage({"distance": distance + " m"}, function() { doSendRef(); } );
+							Pebble.sendAppMessage({"distance": distance + " m - " + wd}, function() { doSendRef(); } );
 						}
 					} else {
 						console.log("Too far for " + ref + ", or already photographed");
-						Pebble.sendAppMessage({"distance": distance + " m"}, function() { doSendRef(); } );
+						Pebble.sendAppMessage({"distance": distance + " m - " + wd}, function() { doSendRef(); } );
 					}
 				}
 
